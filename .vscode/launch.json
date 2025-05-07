@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Express API (ts-node)",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"],
+      "args": ["${workspaceFolder}/src/server.ts"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "cwd": "${workspaceFolder}",
+      "protocol": "inspector",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    }
+  ]
+}
