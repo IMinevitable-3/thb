@@ -1,6 +1,6 @@
 import winston from 'winston';
 import { Request, Response } from 'express';
-const { combine, timestamp, json, printf } = winston.format;
+const { combine, timestamp, printf } = winston.format;
 import { randomBytes } from 'crypto';
 import { environment } from '../environment';
 const appVersion = process.env.npm_package_version;
@@ -31,8 +31,11 @@ const formatHTTPLoggerResponse = (req: Request, res: Response) => {
 const httpLogger = winston.createLogger({
   format: combine(
     timestamp({ format: timestampFormat }),
-    json(),
     printf(({ timestamp, level, message, ...data }) => {
+      if (environment.nodeEnv === 'development') {
+        return `${timestamp} : ${message} - Path: ${data.path}, Status: ${data.statusCode}, Duration: ${data.durationMs}ms`;
+      }
+
       const response = {
         level,
         logId: generateLogId(),
@@ -51,12 +54,12 @@ const httpLogger = winston.createLogger({
   ),
   transports: [
     ...(environment.nodeEnv === 'development'
-      ? [
+      ? [new winston.transports.Console()]
+      : [
           new winston.transports.File({
             filename: 'logs/application-logs.log',
           }),
-        ]
-      : [new winston.transports.Console()]),
+        ]),
   ],
 });
 export { formatHTTPLoggerResponse, httpLogger };
