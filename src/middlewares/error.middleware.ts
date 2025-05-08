@@ -1,27 +1,31 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/appError';
-import { httpLogger } from '../utils/logger';
 
-export const errorHandler = (err: Error | AppError, req: Request, res: Response) => {
+export const errorHandler = (
+  err: Error | AppError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const statusCode = err instanceof AppError ? err.statusCode : 500;
   const isOperational = err instanceof AppError ? err.isOperational : false;
 
-  // Log the error details
-  httpLogger.error('Unhandled Error', {
-    error: {
-      name: err.name,
-      message: err.message,
-      stack: err.stack,
-    },
-    statusCode,
-    isOperational,
-    route: req.originalUrl,
-    method: req.method,
-    clientIp: req.headers['x-forwarded-for'] ?? req.socket.remoteAddress,
-  });
+  // httpLogger.error('Unhandled Error', {
+  //   error: {
+  //     name: err.name,
+  //     message: err.message,
+  //     stack: err.stack,
+  //   },
+  //   statusCode,
+  //   isOperational,
+  //   route: req.originalUrl,
+  //   method: req.method,
+  // });
+
+  if (res.headersSent) return next(err);
 
   res.status(statusCode).json({
     status: 'error',
-    message: err.message || 'Internal Server Error',
+    message: isOperational ? err.message : 'Something went wrong. Please try again later.',
   });
 };

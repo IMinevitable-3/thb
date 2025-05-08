@@ -19,7 +19,6 @@ const formatHTTPLoggerResponse = (req: Request, res: Response) => {
       body: req.body,
       params: req?.params,
       query: req?.query,
-      clientIp: req?.headers['x-forwarded-for'] ?? req?.socket.remoteAddress,
     },
     response: {
       headers: res.getHeaders(),
