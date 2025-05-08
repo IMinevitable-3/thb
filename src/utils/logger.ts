@@ -33,7 +33,9 @@ const httpLogger = winston.createLogger({
     timestamp({ format: timestampFormat }),
     printf(({ timestamp, level, message, ...data }) => {
       if (environment.nodeEnv === 'development') {
-        return `${timestamp} : ${message} - Path: ${data.path}, Status: ${data.statusCode}, Duration: ${data.durationMs}ms`;
+        return message
+          ? `${timestamp} : ${message}`
+          : `${timestamp} : Path: ${data.path}, Status: ${data.statusCode}, Duration: ${data.durationMs}ms`;
       }
 
       const response = {

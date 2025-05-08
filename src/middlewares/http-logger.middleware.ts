@@ -17,7 +17,7 @@ export const httpLoggerMiddleware = (req: Request, res: Response, next: NextFunc
       environment.nodeEnv === 'development'
         ? { path: req.path, elapsedTimeInMs, statusCode: res.statusCode }
         : formatHTTPLoggerResponse(req, res);
-    httpLogger.info('HTTP Request Log', {
+    httpLogger.info('', {
       ...logPayload,
       durationMs: elapsedTimeInMs.toFixed(3),
     });
