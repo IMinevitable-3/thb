@@ -1,0 +1,7 @@
+export enum RESPONSE_TYPE {
+  ERROR,
+  INFORMATION,
+  QUESTION,
+  WARNING,
+  SUCCESS,
+}

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/appError';
-
+import { RESPONSE_TYPE } from '../enums/enum';
 export const errorHandler = (
   err: Error | AppError,
   req: Request,
@@ -25,7 +25,11 @@ export const errorHandler = (
   if (res.headersSent) return next(err);
 
   res.status(statusCode).json({
-    status: 'error',
+    success: false,
+    status: statusCode,
+    showPopUp: true,
     message: isOperational ? err.message : 'Something went wrong. Please try again later.',
+    responseType: RESPONSE_TYPE.ERROR,
+    data: null,
   });
 };
