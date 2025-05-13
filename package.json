@@ -26,8 +26,10 @@
     "@eslint/css": "^0.7.0",
     "@eslint/js": "^9.26.0",
     "@eslint/json": "^0.12.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.15",
     "dotenv": "^16.5.0",
     "eslint": "^9.26.0",
@@ -41,9 +43,11 @@
     "typescript-eslint": "^8.32.0"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.1",
     "winston": "^3.17.0"
   }
