@@ -8,8 +8,9 @@ interface IUserMethods {
 type UserModel = Model<IUser, object, IUserMethods>;
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
 });
 
 //save password as hash
