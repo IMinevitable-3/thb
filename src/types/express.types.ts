@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
 import { ApiResponse } from '../types/response.interface';
+import { IJwtPayload } from './user.types';
+
 export interface TypedRequestBody<T> extends Request {
   body: T;
 }
@@ -13,10 +15,14 @@ export interface TypedRequest<T extends Query, U> extends Request {
   body: U;
   query: T;
 }
+export interface RequestWithUser extends Request {
+  user: IJwtPayload;
+}
 
 export interface TypedResponse<ResBody> extends Response {
   json: Send<ResBody, this>;
 }
+
 export interface TypedGenericResponse<ResBody> extends Response {
   json: Send<ApiResponse<ResBody>, this>;
 }

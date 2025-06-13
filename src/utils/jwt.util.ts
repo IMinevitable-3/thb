@@ -9,3 +9,8 @@ export const generateToken = (payload: IJwtPayload) => {
 export const verifyToken = (token: string) => {
   return jwt.verify(token, environment.jwtSecret);
 };
+
+export const decodeToken = (token: string) => {
+  token = token.replace('Bearer ', '');
+  return jwt.decode(token) as IJwtPayload;
+};

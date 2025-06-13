@@ -17,11 +17,11 @@ export const login = async (
   res: TypedResponse<ApiResponse<ILoginResponse>>
 ) => {
   try {
-    const { email, password } = req.body;
-    const token = await Userlogin(email, password);
+    const { username, password } = req.body;
+    const token = await Userlogin(username, password);
     res.status(200).json(
       formatResponse({
-        data: { token },
+        data: { token: token.token, userId: token.userId },
         message: 'Login successful',
         responseType: RESPONSE_TYPE.SUCCESS,
       })
@@ -36,11 +36,11 @@ export const register = async (
   res: TypedResponse<ApiResponse<IRegisterResponse>>
 ) => {
   try {
-    const { email, password } = req.body;
-    const token = await UserRegister(email, password);
+    const { email, password, username } = req.body;
+    const token = await UserRegister(email, password, username);
     res.status(200).json(
       formatResponse({
-        data: { token },
+        data: { token: token.token, userId: token.userId },
         message: 'Register successful',
         responseType: RESPONSE_TYPE.SUCCESS,
       })
