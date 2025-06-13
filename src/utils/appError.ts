@@ -12,3 +12,18 @@ export class AppError extends Error {
     Error.captureStackTrace(this);
   }
 }
+
+export function ensureError(value: unknown): Error | AppError {
+  if (value instanceof Error) return value;
+  if (value instanceof AppError) return value;
+
+  let stringified = '[Unable to stringify the thrown value]';
+  try {
+    stringified = JSON.stringify(value);
+  } catch {
+    /* empty */
+  }
+
+  const error = new Error(`This value was thrown as is, not through an Error: ${stringified}`);
+  return error;
+}
