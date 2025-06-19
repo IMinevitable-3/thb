@@ -47,3 +47,11 @@ if (!data) throw new AppError('Health data not available', 503);
 
 - node(v22.14.0)
 - npm(v10.9.2)
+
+## docker
+
+```
+docker build -t thb:v1 .
+
+docker run --env-file .env thb:v1
+```
